@@ -1,7 +1,7 @@
 import socket
 from models import Job, Result, Status
 
-def scan_port(job: Job,config):
+def scan(job: Job,config):
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(config.timeout)

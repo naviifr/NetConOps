@@ -1,9 +1,9 @@
-from tcp_connect import scan_port
+import tcp_connect
 
-def worker(job_queue,result_queue,config):
+def Worker(job_queue,result_queue,config):
 
     while True:
 
         job = job_queue.get()
-        result_queue.put(scan_port(job,config))
+        result_queue.put(tcp_connect.scan(job,config))
         job_queue.task_done()
