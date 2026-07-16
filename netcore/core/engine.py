@@ -1,17 +1,18 @@
 import queue
-import models
+import core.models as models
 import threading
-import config
-import worker
-import formatter
+import core.config as config
+import core.worker as worker
+import core.formatter as formatter
 
 class Engine():
 
-    def __init__(self,target: str, ports: list, scan_config: config.ScanConfig):
+    def __init__(self,target: str, ports: list, scan_config: config.ScanConfig, plugins: list):
         
         self.target = target
         self.ports = ports
         self.scan_config = scan_config
+        self.plugins = plugins
     
 
     def _Assign_Job(self):
@@ -31,17 +32,16 @@ class Engine():
 
 
     def _Start_Worker(self):
-        
-        threads=[]
-        result_queue= queue.Queue()
-        q= self._Assign_Job()
+        threads = []
+        result_queue = queue.Queue()
+        q = self._Assign_Job()
 
         for i in range(self.scan_config.worker):
-            t = threading.Thread(target=worker.Worker, args=(q,result_queue,self.scan_config,), daemon=True)         #creates threads(daemon=True will terminate the thread when the main program ends execution)
+            t = threading.Thread(target=worker.Worker, args=(q, result_queue, self.scan_config, self.plugins), daemon=True)
             threads.append(t)
-        
-        for i in threads:
-            i.start()
+
+        for t in threads:
+            t.start()
 
         self._Wait(q)
         return result_queue

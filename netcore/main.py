@@ -1,14 +1,16 @@
 import time
-import config
-import engine
-import formatter
+import core.config as config
+import core.engine as engine
+import core.formatter as formatter
+
 start = time.time()
 
 scan_config = config.ScanConfig()
 ports = [80,443,23,21,25,110,143,53,8080]
 target = "google.com" 
+plugins = ["tcp"]
 
-scanner = engine.Engine(target, ports, scan_config)
+scanner = engine.Engine(target, ports, scan_config, plugins)
 results = scanner.run()
 formatter.print_result(results)
 
