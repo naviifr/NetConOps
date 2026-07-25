@@ -1,5 +1,4 @@
 from core.models import ScanContext, Plugin
-import core.config as config
 from plugins import plugins_registry as plugins_registry
 
 class PluginManager:
@@ -15,13 +14,12 @@ class PluginManager:
         for j in self.plugin_final:
             self.plugins.append((plugins_registry.Registry[j]))
 
-
-    def execute(self, context: ScanContext, config : config.ScanConfig):
+    def execute(self, context: ScanContext):
         
         try:
             for plugin in self.plugins:
-                obj = plugin(context, config)
-                obj.execute()
+                obj = plugin()
+                obj.execute(context)
 
         finally:
             if context.sock:

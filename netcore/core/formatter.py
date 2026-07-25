@@ -9,4 +9,4 @@ def get_results(result_queue):
 
 def print_result(result_list):
     for i in result_list:
-        print(i.port, ":", i.status.value, f"({i.error})" if i.error else "")
+        print(i.port, ":", i.status.value, f"| Banner: {i.banner}" if i.banner else "", f"({i.error})" if i.error else "",)

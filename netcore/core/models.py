@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 from enum import Enum
 import socket 
+from core.config import ScanConfig
 
 class Status(Enum):
     OPEN = "Open"
@@ -12,6 +13,7 @@ class Status(Enum):
 
 class Plugin(Enum):
     TCP = "tcp"
+    BANNER = "banner"
 
 @dataclass
 class Job:
@@ -23,9 +25,11 @@ class Result:
     port: int
     status: Status
     error: Optional[str] = None
+    banner: Optional[str] = None
 
 @dataclass
 class ScanContext:
+    config: ScanConfig
     job: Job
     sock: Optional[socket.socket] = None
     result: Optional[Result] = None

@@ -6,9 +6,10 @@ import core.formatter as formatter
 start = time.time()
 
 scan_config = config.ScanConfig()
-ports = [80,443,23,21,25,110,143,53,8080]
-target = "google.com" 
-plugins = ["tcp"]
+ports = [80,443,22,23,25,110,143,53,8080]
+# target = "google.com" 
+target = "scanme.nmap.org"
+plugins = ["tcp", "banner"]
 
 scanner = engine.Engine(target, ports, scan_config, plugins)
 results = scanner.run()
