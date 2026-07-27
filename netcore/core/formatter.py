@@ -1,11 +1,11 @@
 def get_results(result_queue):
     
-    a = []
+    result_list= []
     while  not result_queue.empty():
-        a.append(result_queue.get())
+        result_list.append(result_queue.get())
     
-    a = sorted(a, key=lambda x: x.port)  #sorting the results based on port number
-    return a
+    result_list = sorted(result_list, key=lambda x: x.port)  #sorting the results based on port number
+    return result_list
 
 def print_result(result_list):
     for i in result_list:

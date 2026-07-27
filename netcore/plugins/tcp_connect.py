@@ -3,6 +3,8 @@ from core.models import Result, Status, ScanContext
 
 class TCP_Connect:
 
+    dependency = None
+
     def execute(self, context: ScanContext):
 
         temp_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

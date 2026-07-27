@@ -4,16 +4,32 @@ import threading
 import core.config as config
 import core.worker as worker
 import core.formatter as formatter
+from plugins.plugins_registry import registry
 
 class Engine():
 
-    def __init__(self,target: str, ports: list, scan_config: config.ScanConfig, plugins: list):
+    def __init__(self,target: str, ports: list, scan_config: config.ScanConfig, plugin_input: list):
         
         self.target = target
         self.ports = ports
         self.scan_config = scan_config
-        self.plugins = plugins
+        self.plugins = plugin_input
     
+    def _Dependency_check(self):
+
+        plugin_exec =[]
+        self.plugins_input = []
+        
+        for i in self.plugins:
+        
+            dependents = registry[i].dependency
+            
+            if dependents is not None:
+                if registry[dependents] not in plugin_exec:
+                    plugin_exec.append((registry[dependents]))
+
+            plugin_exec.append((registry[i]))
+        return plugin_exec
 
     def _Assign_Job(self):
         
@@ -35,6 +51,8 @@ class Engine():
         threads = []
         result_queue = queue.Queue()
         q = self._Assign_Job()
+
+        self.plugins = self._Dependency_check()
 
         for i in range(self.scan_config.worker):
             t = threading.Thread(target=worker.Worker, args=(q, result_queue, self.scan_config, self.plugins), daemon=True)

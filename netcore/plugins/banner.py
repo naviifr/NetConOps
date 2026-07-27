@@ -3,6 +3,8 @@ import socket
 
 class Banner:
 
+    dependency = "tcp"
+
     def execute(self, context: ScanContext):
         sock = context.sock
 

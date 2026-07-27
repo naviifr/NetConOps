@@ -11,10 +11,6 @@ class Status(Enum):
     UNREACHABLE = "Unreachable"
     DNS_ERROR = "DNS Resolution Failed"
 
-class Plugin(Enum):
-    TCP = "tcp"
-    BANNER = "banner"
-
 @dataclass
 class Job:
     target: str
