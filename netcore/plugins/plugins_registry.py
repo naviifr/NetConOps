@@ -2,6 +2,6 @@ from plugins.tcp_connect import TCP_Connect
 from plugins.banner import Banner
 
 registry = {
-    "tcp" : TCP_Connect,
-    "banner" : Banner
+    TCP_Connect.name : TCP_Connect,
+    Banner.name : Banner
 }

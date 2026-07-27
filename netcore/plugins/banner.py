@@ -1,8 +1,10 @@
 from core.models import ScanContext
+from .base_plugin import BasePlugin
 import socket
 
-class Banner:
+class Banner(BasePlugin):
 
+    name = "banner"
     dependency = "tcp"
 
     def execute(self, context: ScanContext):

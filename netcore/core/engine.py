@@ -28,7 +28,9 @@ class Engine():
                 if registry[dependents] not in plugin_exec:
                     plugin_exec.append((registry[dependents]))
 
-            plugin_exec.append((registry[i]))
+            if registry[i] not in plugin_exec:
+                plugin_exec.append((registry[i]))
+                
         return plugin_exec
 
     def _Assign_Job(self):

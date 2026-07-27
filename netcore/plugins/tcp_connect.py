@@ -1,8 +1,10 @@
 import socket
 from core.models import Result, Status, ScanContext
+from .base_plugin import BasePlugin
 
-class TCP_Connect:
+class TCP_Connect(BasePlugin):
 
+    name = "tcp"
     dependency = None
 
     def execute(self, context: ScanContext):
