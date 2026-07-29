@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import Optional, Any
 from enum import Enum
 import socket 
 from core.config import ScanConfig
@@ -20,9 +20,9 @@ class Job:
 class Result:
     port: int
     status: Status
-    error: Optional[str] = None
-    banner: Optional[str] = None
-
+    error: dict[str, str] = field(default_factory=dict)
+    plg_data: dict[str, Any] = field(default_factory=dict)
+    
 @dataclass
 class ScanContext:
     config: ScanConfig

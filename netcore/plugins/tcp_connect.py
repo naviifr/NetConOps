@@ -15,16 +15,19 @@ class TCP_Connect(BasePlugin):
 
         try:
             temp_sock.connect((context.job.target, context.job.port,))
-            context.result = Result(port=context.job.port, status=Status.OPEN, error=None)
+            context.result = Result(port=context.job.port, status=Status.OPEN)
         
-        except TimeoutError:
+        except TimeoutError as e:
             context.result = Result(port=context.job.port, status=Status.TIMEOUT)
         
         except ConnectionRefusedError as e:
-            context.result = Result(port=context.job.port, status=Status.CLOSED, error=str(e))
+            context.result = Result(port=context.job.port, status=Status.CLOSED)
+            context.result.error["tcp"]  = str(e)
         
         except socket.gaierror as e:
-            context.result = Result(port=context.job.port, status=Status.DNS_ERROR, error=str(e))
+            context.result = Result(port=context.job.port, status=Status.DNS_ERROR)
+            context.result.error["tcp"]  = str(e)
 
         except OSError as e:
-            context.result = Result(port=context.job.port, status=Status.UNREACHABLE, error=str(e))
+            context.result = Result(port=context.job.port, status=Status.UNREACHABLE)
+            context.result.error["tcp"]  = str(e)

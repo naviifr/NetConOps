@@ -1,4 +1,4 @@
-from core.models import ScanContext
+from core.models import ScanContext, Status
 from .base_plugin import BasePlugin
 import socket
 
@@ -17,8 +17,13 @@ class Banner(BasePlugin):
 
         try:
             results = sock.recv(512)
-            context.result.banner = results.decode(errors="replace").rstrip("\r\n")
+            context.result.plg_data["banner"] = results.decode(errors="replace").rstrip("\r\n")
 
         except socket.timeout as e:
-            pass
-    
+            context.result.error['banner'] = str(e)
+
+        except ConnectionResetError as e:
+            context.result.error['banner'] = str(e)
+
+        except OSError as e:
+            context.result.error["banner"] = str(e)

@@ -9,4 +9,17 @@ def get_results(result_queue):
 
 def print_result(result_list):
     for i in result_list:
-        print(i.port, ":", i.status.value, f"| Banner: {i.banner}" if i.banner else "", f"({i.error})" if i.error else "",)
+        print(f"{i.port}", f"\n{i.status.value}",
+        f"".join((f"| {k}: {v}"  for k, v in i.error.items())) if i.error else "")
+
+        if i.plg_data:
+            for k, v in i.plg_data.items():
+
+                if type(v) is dict:
+                    print(f"{k}:", end= "")
+                    for p, q in v.items():
+                          print(f"\t{p}: {q}")
+                else:
+                    print(f"{k}: {v}")
+
+        
