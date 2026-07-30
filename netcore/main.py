@@ -7,9 +7,10 @@ start = time.time()
 
 scan_config = config.ScanConfig()
 ports = [80,443,22,23,25,110,143,53,8080]
+# ports = [443]
 target = "google.com" 
 # target = "scanme.nmap.org"
-plugins = ["tcp","banner"]
+plugins = ["banner","tls"]
 
 scanner = engine.Engine(target, ports, scan_config, plugins)
 results = scanner.run()
