@@ -1,6 +1,6 @@
 import socket
 from core.models import Result, Status, ScanContext
-from .base_plugin import BasePlugin
+from .base_class import BasePlugin
 
 class TCP_Connect(BasePlugin):
 

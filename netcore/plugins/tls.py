@@ -1,4 +1,4 @@
-from .base_plugin import BasePlugin
+from .base_class import BasePlugin
 from core.models import ScanContext, Status
 from cryptography import x509
 from cryptography.x509.oid import ExtensionOID
@@ -54,7 +54,7 @@ class TLS(BasePlugin):
             der_cert= sslsock.getpeercert(binary_form=True)
 
             if der_cert:
-                cert = x509.load_der_x509_certificate(der_cert)
+                cert = x509.load_der_x509_certificate(der_cert)    #since cert verification is disabled, python doesnt store the certificate dictionary
 
                 context.result.plg_data["tls"]["Cert_Subject"] = cert.subject.rfc4514_string()
                 context.result.plg_data["tls"]["Cert_Issuer"] = cert.issuer.rfc4514_string()
@@ -89,8 +89,4 @@ class TLS(BasePlugin):
         except Exception as e:
             context.result.error['tls'] = str(e)
 
-        finally:
-            if sslsock is None:
-                return
-            context.sock  = sslsock.unwrap()
 

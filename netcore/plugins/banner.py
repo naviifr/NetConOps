@@ -1,5 +1,5 @@
 from core.models import ScanContext, Status
-from .base_plugin import BasePlugin
+from .base_class import BasePlugin
 import socket
 
 class Banner(BasePlugin):
