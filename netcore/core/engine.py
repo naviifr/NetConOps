@@ -17,21 +17,27 @@ class Engine():
     
     def _Dependency_check(self):
 
-        plugin_exec =[]
-        self.plugins_input = []
-        
-        for i in self.plugins:
-        
-            dependents = registry[i].dependency
-            
+        plg_list =[]
+
+        def resolve_dependency(temp_plg, plugin_exec: list):
+
+            dependents = registry[temp_plg].dependency
+                        
             if dependents is not None:
                 if registry[dependents] not in plugin_exec:
-                    plugin_exec.append((registry[dependents]))
+                    resolve_dependency(dependents,plugin_exec)
+                    if registry[dependents] not in plugin_exec:
+                        plugin_exec.append((registry[dependents]))
 
-            if registry[i] not in plugin_exec:
-                plugin_exec.append((registry[i]))
-                
-        return plugin_exec
+            if registry[temp_plg] not in plugin_exec:
+                plugin_exec.append((registry[temp_plg]))
+
+        for i in self.plugins:
+        
+            resolve_dependency(i,plg_list)
+
+        return plg_list
+        
 
     def _Assign_Job(self):
         
