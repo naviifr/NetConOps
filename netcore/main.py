@@ -23,7 +23,7 @@ ports = args.ports
 target = args.target
 arg_dict= vars(args)
 
-plugins = ['tcp']
+plugins = []
 
 for i,j in arg_dict.items():
     if i in registry and j is True:
@@ -31,6 +31,9 @@ for i,j in arg_dict.items():
             pass
         else:
             plugins.append(i)
+
+if plugins == []:
+    plugins.append('tcp')
 
 # target = "scanme.nmap.org"
 

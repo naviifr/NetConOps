@@ -15,17 +15,15 @@ class TLS(BasePlugin):
         sslcntxt.check_hostname =  False
         sslcntxt.verify_mode =  ssl.CERT_NONE
         sslcntxt.set_alpn_protocols([
-            "h2",            # HTTP/2
+            # "h2",            # HTTP/2
             "http/1.1",      # HTTP/1.1
             "http/1.0",      # HTTP/1.0 
-            "acme-tls/1",    # ACME Challenge
+            "acme-tls/1",    # ACME
             "imap",          # IMAP
             "pop3",          # POP3
             "dot",           # DNS-over-TLS
             "mqtt",          # IoT Messaging
         ])
-
-        sslsock = None
 
         if context.sock is None or context.result is  None:
             return 
@@ -45,10 +43,10 @@ class TLS(BasePlugin):
             alpn = sslsock.selected_alpn_protocol()
 
             context.result.plg_data["tls"] = {
-                'Version' : str(ver),
-                'Cipher' :  cipher[0],
-                'Cipher_Bits': cipher[2],
-                'Application_Protocol': str(alpn)
+                'version' : str(ver),
+                'cipher' :  cipher[0],
+                'cipher_bits': cipher[2],
+                'application_protocol': str(alpn)
             }
 
             der_cert= sslsock.getpeercert(binary_form=True)
@@ -56,11 +54,11 @@ class TLS(BasePlugin):
             if der_cert:
                 cert = x509.load_der_x509_certificate(der_cert)    #since cert verification is disabled, python doesnt store the certificate dictionary
 
-                context.result.plg_data["tls"]["Cert_Subject"] = cert.subject.rfc4514_string()
-                context.result.plg_data["tls"]["Cert_Issuer"] = cert.issuer.rfc4514_string()
-                context.result.plg_data["tls"]["Cert_Valid_from"] = cert.not_valid_before_utc.isoformat()
-                context.result.plg_data["tls"]["Cert_Valid_until"] = cert.not_valid_after_utc.isoformat()
-                context.result.plg_data["tls"]["Cert_Serial_Number"] = hex(cert.serial_number)
+                context.result.plg_data["tls"]["cert_subject"] = cert.subject.rfc4514_string()
+                context.result.plg_data["tls"]["cert_issuer"] = cert.issuer.rfc4514_string()
+                context.result.plg_data["tls"]["cert_valid_from"] = cert.not_valid_before_utc.isoformat()
+                context.result.plg_data["tls"]["cert_valid_until"] = cert.not_valid_after_utc.isoformat()
+                context.result.plg_data["tls"]["cert_serial_number"] = hex(cert.serial_number)
 
                 try:
                     san = cert.extensions.get_extension_for_oid(ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
@@ -74,12 +72,14 @@ class TLS(BasePlugin):
                         context.result.plg_data["tls"]["cert_SANs"]  = temp
 
                 except x509.ExtensionNotFound as e:
-                    context.result.error['tls'] = str(e)                   
+                    context.result.error['tls'] = str(e)
 
+            context.sock = sslsock                  
             
         except ssl.SSLError as e :
             if "WRONG_VERSION_NUMBER" in str(e):
                 context.result.error['tls'] = "The port does not support SSL/TLS"
+                context.sock = None
             else:
                 context.result.error['tls'] = str(e)
         except ConnectionResetError as e:
