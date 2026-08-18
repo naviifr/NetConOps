@@ -11,10 +11,6 @@ class HTTPS(BasePlugin):
         if context.sock is None:
             return
 
-        if context.result is None:
-            return
-
-
         http = HTTP()
         sock = context.sock
 

@@ -58,18 +58,18 @@ class Engine():
     def _Start_Worker(self):
         threads = []
         result_queue = queue.Queue()
-        q = self._Assign_Job()
+        job_queue = self._Assign_Job()
 
         self.plugins = self._Dependency_check()
 
         for i in range(self.scan_config.worker):
-            t = threading.Thread(target=worker.Worker, args=(q, result_queue, self.scan_config, self.plugins), daemon=True)
+            t = threading.Thread(target=worker.Worker, args=(job_queue, result_queue, self.scan_config, self.plugins), daemon=True)
             threads.append(t)
 
         for t in threads:
             t.start()
 
-        self._Wait(q)
+        self._Wait(job_queue)
         return result_queue
     
     

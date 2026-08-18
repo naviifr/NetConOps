@@ -19,13 +19,13 @@ class Job:
 @dataclass
 class Result:
     port: int
-    status: Status
     error: dict[str, str] = field(default_factory=dict)
     plg_data: dict[str, Any] = field(default_factory=dict)
+    status: Optional[Status] = None
     
 @dataclass
 class ScanContext:
     config: ScanConfig
     job: Job
+    result: Result
     sock: Optional[socket.socket] = None
-    result: Optional[Result] = None

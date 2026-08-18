@@ -11,8 +11,6 @@ class HTTP(BasePlugin):
         if context.sock is None:
             return
 
-        if context.result is None:
-            return
         try:
             sock = context.sock
             self.send_request(context.job.target, sock)

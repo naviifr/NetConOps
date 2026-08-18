@@ -25,7 +25,7 @@ class TLS(BasePlugin):
             "mqtt",          # IoT Messaging
         ])
 
-        if context.sock is None or context.result is  None:
+        if context.sock is None:
             return 
 
         if context.result.status is not Status.OPEN:

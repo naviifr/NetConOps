@@ -10,7 +10,7 @@ class Banner(BasePlugin):
     def execute(self, context: ScanContext):
         sock = context.sock
 
-        if sock is None or context.result is None:
+        if sock is None:
             return
 
         sock.settimeout(1)
