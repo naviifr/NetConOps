@@ -25,9 +25,6 @@ class TLS(BasePlugin):
             "mqtt",          # IoT Messaging
         ])
 
-        if context.sock is None:
-            return 
-
         if context.result.status is not Status.OPEN:
             return
         
@@ -76,17 +73,12 @@ class TLS(BasePlugin):
 
             context.sock = sslsock                  
             
-        except ssl.SSLError as e :
+        except (ssl.SSLError, ConnectionResetError, OSError, Exception) as e :
             if "WRONG_VERSION_NUMBER" in str(e):
                 context.result.error['tls'] = "The port does not support SSL/TLS"
-                context.sock = None
             else:
                 context.result.error['tls'] = str(e)
-        except ConnectionResetError as e:
-            context.result.error['tls'] = str(e)
-        except OSError as e:
-            context.result.error['tls'] = str(e)
-        except Exception as e:
-            context.result.error['tls'] = str(e)
+
+            context.result.status = Status.UNREACHABLE
 
 

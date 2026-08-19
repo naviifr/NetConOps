@@ -1,4 +1,4 @@
-from core.models import ScanContext
+from core.models import ScanContext, Status
 from plugins import plugins_registry as plugins_registry
 
 class PluginManager:
@@ -11,6 +11,10 @@ class PluginManager:
         try:
             for plugin in self.plugins:
                 obj = plugin()
+
+                if context.result.status not in (Status.OPEN, None):
+                            continue
+                
                 obj.execute(context)
 
         finally:

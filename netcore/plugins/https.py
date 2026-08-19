@@ -8,9 +8,6 @@ class HTTPS(BasePlugin):
 
     def execute(self, context: ScanContext):
 
-        if context.sock is None:
-            return
-
         http = HTTP()
         sock = context.sock
 

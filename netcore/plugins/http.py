@@ -8,9 +8,6 @@ class HTTP(BasePlugin):
 
     def execute(self, context: ScanContext):
 
-        if context.sock is None:
-            return
-
         try:
             sock = context.sock
             self.send_request(context.job.target, sock)

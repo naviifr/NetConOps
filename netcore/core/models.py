@@ -28,4 +28,4 @@ class ScanContext:
     config: ScanConfig
     job: Job
     result: Result
-    sock: Optional[socket.socket] = None
+    sock: socket.socket = field(init=False)
