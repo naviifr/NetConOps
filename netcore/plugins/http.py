@@ -61,9 +61,10 @@ class HTTP(BasePlugin):
         header = header.split("\r\n")
         version, code, reason = header[0].split(' ', 2)
 
-        result = {'version':version,
-                  'code': int(code),
-                  'reason': reason,
+        result = {'headers': {'version':version,
+                                'code': int(code),
+                                'reason': reason,
+                                },
                   }
 
         for i in header[1:]:

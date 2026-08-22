@@ -25,9 +25,6 @@ class TLS(BasePlugin):
             "mqtt",          # IoT Messaging
         ])
 
-        if context.result.status is not Status.OPEN:
-            return
-        
         try:
             sslsock = sslcntxt.wrap_socket(context.sock, server_hostname=context.job.target)
     

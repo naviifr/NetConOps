@@ -7,19 +7,27 @@ def get_results(result_queue):
     result_list = sorted(result_list, key=lambda x: x.port)  #sorting the results based on port number
     return result_list
 
+def print_rec(dict_data: dict, indent_level: int = 0):
+
+            indent = "\t" * indent_level
+            for key, value in dict_data.items():
+
+                if isinstance(value, dict):
+                    print(f"{indent}{key}:", end= "\n")
+                    print_rec(value, indent_level + 1)
+
+                else:
+                    print(f"{indent}{key}: {value}")
+
+
 def print_result(result_list):
+
     for i in result_list:
+
         print(f"{i.port}", f"{i.status.value}",
-        f"".join((f"| {k}: {v}"  for k, v in i.error.items())) if i.error else "")
+        f"".join((f" | {k}: {v}"  for k, v in i.error.items())) if i.error else "")
 
         if i.plg_data:
-            for k, v in i.plg_data.items():
-
-                if type(v) is dict:
-                    print(f"{k}:", end= "")
-                    for p, q in v.items():
-                          print(f"\t{p}: {q}")
-                else:
-                    print(f"{k}: {v}")
+                    print_rec(i.plg_data)
 
         
