@@ -1,0 +1,97 @@
+{
+    "target": "google.com",
+    "intel": [
+        {
+            "port": 22,
+            "error": {},
+            "plg_data": {},
+            "status": "Timeout"
+        },
+        {
+            "port": 23,
+            "error": {},
+            "plg_data": {},
+            "status": "Timeout"
+        },
+        {
+            "port": 25,
+            "error": {},
+            "plg_data": {},
+            "status": "Timeout"
+        },
+        {
+            "port": 53,
+            "error": {},
+            "plg_data": {},
+            "status": "Timeout"
+        },
+        {
+            "port": 80,
+            "error": {
+                "tls": "The port does not support SSL/TLS"
+            },
+            "plg_data": {},
+            "status": "Unreachable"
+        },
+        {
+            "port": 110,
+            "error": {},
+            "plg_data": {},
+            "status": "Timeout"
+        },
+        {
+            "port": 143,
+            "error": {},
+            "plg_data": {},
+            "status": "Timeout"
+        },
+        {
+            "port": 443,
+            "error": {},
+            "plg_data": {
+                "tls": {
+                    "version": "TLSv1.3",
+                    "cipher": "TLS_AES_256_GCM_SHA384",
+                    "cipher_bits": 256,
+                    "application_protocol": "http/1.1",
+                    "cert_subject": "CN=*.google.com",
+                    "cert_issuer": "CN=WR2,O=Google Trust Services,C=US",
+                    "cert_valid_from": "2026-08-05T20:42:14+00:00",
+                    "cert_valid_until": "2026-10-28T20:42:13+00:00",
+                    "cert_serial_number": "0x1e725296b09821d912c3c73f45e9020e",
+                    "cert_SANs": "*.google.com,\n\t\t   *.appengine.google.com,\n\t\t   *.bdn.dev,\n\t\t   *.origin-test.bdn.dev,\n\t\t   *.cloud.google.com,\n\t\t   *.crowdsource.google.com,\n\t\t   *.datacompute.google.com,\n\t\t   *.google.ca,\n\t\t   *.google.cl,\n\t\t   *.google.co.in,\n\t\t   *.google.co.jp,\n\t\t   *.google.co.uk,\n\t\t   *.google.com.ar,\n\t\t   *.google.com.au,\n\t\t   *.google.com.br,\n\t\t   *.google.com.co,\n\t\t   *.google.com.mx,\n\t\t   *.google.com.tr,\n\t\t   *.google.com.vn,\n\t\t   *.google.de,\n\t\t   *.google.es,\n\t\t   *.google.fr,\n\t\t   *.google.hu,\n\t\t   *.google.it,\n\t\t   *.google.nl,\n\t\t   *.google.pl,\n\t\t   *.google.pt,\n\t\t   *.gemini.cloud.google.com,\n\t\t   *.gstatic.com,\n\t\t   *.metric.gstatic.com,\n\t\t   *.gvt1.com,\n\t\t   *.gcpcdn.gvt1.com,\n\t\t   *.gvt2.com,\n\t\t   *.gcp.gvt2.com,\n\t\t   *.url.google.com,\n\t\t   *.youtube-nocookie.com,\n\t\t   *.ytimg.com,\n\t\t   ai.android,\n\t\t   android.com,\n\t\t   *.android.com,\n\t\t   *.flash.android.com,\n\t\t   g.co,\n\t\t   *.g.co,\n\t\t   goo.gl,\n\t\t   www.goo.gl,\n\t\t   google-analytics.com,\n\t\t   *.google-analytics.com,\n\t\t   google.com,\n\t\t   googlecommerce.com,\n\t\t   *.googlecommerce.com,\n\t\t   urchin.com,\n\t\t   *.urchin.com,\n\t\t   youtu.be,\n\t\t   youtube.com,\n\t\t   *.youtube.com,\n\t\t   music.youtube.com,\n\t\t   *.music.youtube.com,\n\t\t   youtubeeducation.com,\n\t\t   *.youtubeeducation.com,\n\t\t   youtubekids.com,\n\t\t   *.youtubekids.com,\n\t\t   yt.be,\n\t\t   *.yt.be,\n\t\t   android.clients.google.com,\n\t\t   *.aistudio.google.com,\n\t\t   "
+                },
+                "https": {
+                    "headers": {
+                        "version": "HTTP/1.1",
+                        "code": 301,
+                        "reason": "Moved Permanently"
+                    },
+                    "location": "https://www.google.com/",
+                    "content-type": "text/html; charset=UTF-8",
+                    "content-security-policy-report-only": "object-src 'none';base-uri 'self';script-src 'nonce-Yp2gwh5SFTt9Tqhv-nwJAw' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other-hp",
+                    "date": "Mon, 24 Aug 2026 20:10:17 GMT",
+                    "expires": "Wed, 23 Sep 2026 20:10:17 GMT",
+                    "cache-control": "public, max-age=2592000",
+                    "server": "gws",
+                    "content-length": "220",
+                    "x-xss-protection": "0",
+                    "x-frame-options": "SAMEORIGIN",
+                    "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+                    "connection": "close"
+                },
+                "service": {
+                    "service": "Google Web Server (gws)",
+                    "confidence": "high"
+                }
+            },
+            "status": "Open"
+        },
+        {
+            "port": 8080,
+            "error": {},
+            "plg_data": {},
+            "status": "Timeout"
+        }
+    ]
+}

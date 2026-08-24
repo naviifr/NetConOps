@@ -2,7 +2,8 @@ import time
 import argparse
 import core.config as config
 import core.engine as engine
-import core.formatter as formatter
+import core.formatter.terminal as terminal
+import core.formatter.json as json
 from plugins.plugins_registry import registry
 
 start = time.time()
@@ -13,6 +14,7 @@ default_ports = [80,443,22,23,25,110,143,53,8080]
 parser = argparse.ArgumentParser()
 parser.add_argument('target')
 parser.add_argument('-p','--ports',type=int,nargs='+',default=default_ports)
+parser.add_argument('-json', action= 'store_true')
 
 for i in registry:
     parser.add_argument(f'-{i}', action='store_true')
@@ -39,7 +41,11 @@ if plugins == []:
 
 scanner = engine.Engine(target, ports, scan_config, plugins)
 results = scanner.run()
-formatter.print_result(results)
+
+if args.json:
+    json.json_execute(results)
+else:
+    terminal.print_result(results)
 
 end = time.time()
 print(end - start)                          #for calculating the execution time

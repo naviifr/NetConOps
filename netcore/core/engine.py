@@ -3,7 +3,7 @@ import core.models as models
 import threading
 import core.config as config
 import core.worker as worker
-import core.formatter as formatter
+import core.formatter.terminal as terminal
 from plugins.plugins_registry import registry
 
 class Engine():
@@ -75,7 +75,7 @@ class Engine():
     
     def _Format_Results(self, result_queue: queue.Queue):
         
-        results = formatter.get_results(result_queue)       
+        results = terminal.get_results(result_queue)       
         return results
 
     def run(self):
