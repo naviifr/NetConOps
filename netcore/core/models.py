@@ -18,6 +18,7 @@ class Job:
 
 @dataclass
 class Result:
+    target: str
     port: int
     error: dict[str, str] = field(default_factory=dict)
     plg_data: dict[str, Any] = field(default_factory=dict)
