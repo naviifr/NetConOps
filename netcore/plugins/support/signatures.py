@@ -151,6 +151,15 @@ patterns = [
             (re.compile(r"^ESF", re.I),            "Google ESF"),
             (re.compile(r"^GSE", re.I),            "Google Servlet Engine"),
 
+            (re.compile(r"^HTTP/2(\.0)?$"),          "HTTP/2"),
+            (re.compile(r"^HTTP/1\.1$"),             "HTTP/1.1"),
+            (re.compile(r"^HTTP/1\.0$"),             "HTTP/1.0"),
+            (re.compile(r"^HTTP/0\.9$"),             "HTTP/0.9"),
+            (re.compile(r"^h2$"),                    "HTTP/2 (via ALPN)"),
+            (re.compile(r"^h2c$"),                   "HTTP/2 cleartext (via ALPN)"),
+            (re.compile(r"^http/1\.1$", re.I),       "HTTP/1.1 (via ALPN)"),
+            (re.compile(r"^http/1\.0$", re.I),       "HTTP/1.0 (via ALPN)"),
+
             (re.compile(r"CN=.*\.cloudflare", re.I),        "Cloudflare (via cert)"),
             (re.compile(r"CN=.*\.amazonaws", re.I),         "AWS (via cert)"),
             (re.compile(r"CN=.*\.google", re.I),            "Google (via cert)"),
