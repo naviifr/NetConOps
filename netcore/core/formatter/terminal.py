@@ -25,7 +25,7 @@ def print_result(result_list:list):
 
     for i in result_list:
 
-        print(f"{i.port}", f"{i.status.value}",
+        print(f"{i.port}", f"{i.status.value}" if i.status is not None else '',
         f"".join((f" | {k}: {v}"  for k, v in i.error.items())) if i.error else "")
 
         if i.plg_data:

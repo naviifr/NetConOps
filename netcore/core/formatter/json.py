@@ -13,7 +13,7 @@ def json_result(result_list: list):
 
         json_data = asdict(i)
         del json_data['target']
-        json_data['status'] = json_data['status'].value
+        json_data['status'] = json_data['status'].value if json_data['status'] is not None else ''
 
         json_dict['intel'].append(json_data)
 

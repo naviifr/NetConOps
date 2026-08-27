@@ -10,6 +10,7 @@ class Status(Enum):
     TIMEOUT = "Timeout"
     UNREACHABLE = "Unreachable"
     DNS_ERROR = "DNS Resolution Failed"
+    FILTERED = "Filtered"
 
 @dataclass
 class Job:

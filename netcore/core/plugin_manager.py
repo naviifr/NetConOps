@@ -18,6 +18,6 @@ class PluginManager:
                 obj.execute(context)
 
         finally:
-            if context.sock:
+            if hasattr(context, "sock"):
                 context.sock.close()
 
