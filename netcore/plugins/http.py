@@ -1,4 +1,4 @@
-from .base_class import BasePlugin
+from .support.base_class import BasePlugin
 from core.models import ScanContext
 import socket
 

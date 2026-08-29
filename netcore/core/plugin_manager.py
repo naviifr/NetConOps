@@ -1,5 +1,5 @@
 from core.models import ScanContext, Status
-from plugins import plugins_registry as plugins_registry
+from plugins.support import plugins_registry as plugins_registry
 
 class PluginManager:
 

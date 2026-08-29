@@ -4,7 +4,7 @@ import core.config as config
 import core.engine as engine
 import core.formatter.terminal as terminal
 import core.formatter.json as json
-from plugins.plugins_registry import registry
+from plugins.support.plugins_registry import registry
 
 start = time.time()
 

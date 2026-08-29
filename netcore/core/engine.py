@@ -4,7 +4,7 @@ import threading
 import core.config as config
 import core.worker as worker
 import core.formatter.terminal as terminal
-from plugins.plugins_registry import registry
+from plugins.support.plugins_registry import registry
 
 class Engine():
 

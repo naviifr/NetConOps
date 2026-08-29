@@ -1,4 +1,4 @@
-from .base_class import BasePlugin
+from .support.base_class import BasePlugin
 from core.models import ScanContext, Status
 from cryptography import x509
 from cryptography.x509.oid import ExtensionOID
