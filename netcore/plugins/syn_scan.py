@@ -31,35 +31,11 @@ class SYN_Scan(BasePlugin):
             elif not privilege:
                 return
 
-            _sport = int(RandShort())
-            _seq = int(RandInt())
-
-            target_ip = gethostbyname(context.job.target)
-            my_mac = get_if_hwaddr(conf.iface)
-            my_iface, my_ip, gateway = conf.route.route(target_ip)
-            gateway_mac = self.get_system_gateway_mac(gateway)
-
-            packet = (Ether(dst= gateway_mac, src= my_mac)/
-                     IP(src=my_ip, dst=target_ip) /
-                     TCP(sport= _sport,dport=context.job.port, flags="S", seq = _seq)
-                        )
-
-            bpf = (
-            f"tcp and src host {target_ip} and dst host {my_ip} "
-            f"and src port {context.job.port} and dst port {_sport}"
-            )
-
-            sniffer = AsyncSniffer(iface=my_iface, filter=bpf, store=True)
-            sniffer.start()
-
-            sleep(0.1)
-            sendp(packet, iface=my_iface, verbose=False)
-
-            sleep(2)
-            responses = sniffer.stop()
-
-            received_packet = responses[0] if responses else None
-            
+            received_packet = self.initiate_transmission(target_port = context.job.port, 
+                                                        ip = context.job.target,
+                                                        packet_former = self.packet_former,
+                                                        response_bpf = self.response_bpf,
+                                                        timeout = context.config.syn_timeout)
             self.parse_response(received_packet, context)
 
         except Exception as e:
@@ -112,4 +88,49 @@ class SYN_Scan(BasePlugin):
         except Exception:
             pass
 
-        return None
+        raise ValueError("Couldnt resolve gateway mac address")
+
+    @staticmethod
+    def packet_former(gateway_mac, my_mac, my_ip, target_ip, srcport,target_port):
+
+        _seq = int(RandInt())
+
+        packet = (Ether(dst= gateway_mac, src= my_mac)/
+                IP(src=my_ip, dst=target_ip) /
+                TCP(sport= srcport,dport=target_port, flags="S", seq = _seq)
+                )
+
+        return packet
+
+    @staticmethod
+    def response_bpf(target_ip, my_ip, target_port, srcport):
+        bpf = (
+                f"tcp and src host {target_ip} and dst host {my_ip} "
+                f"and src port {target_port} and dst port {srcport}"
+                )
+        return bpf
+
+    def initiate_transmission(self, target_port, ip, packet_former, response_bpf, timeout):
+
+        srcport = int(RandShort())
+
+        target_ip = gethostbyname(ip)
+        my_mac = get_if_hwaddr(conf.iface)
+        my_iface, my_ip, gateway = conf.route.route(target_ip)
+        gateway_mac = self.get_system_gateway_mac(gateway)
+
+        packet = packet_former(gateway_mac=gateway_mac, my_mac=my_mac, my_ip=my_ip, target_ip=target_ip, srcport=srcport, target_port=target_port)
+
+        bpf = response_bpf(target_ip= target_ip, my_ip= my_ip, target_port= target_port, srcport= srcport)
+
+
+        sniffer = AsyncSniffer(iface=my_iface, filter=bpf, store=True)
+        sniffer.start()
+
+        sleep(0.1)
+        sendp(packet, iface=my_iface, verbose=False)
+
+        sleep(timeout)
+        responses = sniffer.stop()
+
+        return responses[0] if responses else None

@@ -9,3 +9,5 @@ class ScanConfig:
     timeout: int = TIMEOUT
     worker: int = WORKERS
     header_size: int = MAX_HEADER_SIZE
+    syn_timeout: int = TIMEOUT
+    udp_timeout: int = TIMEOUT
