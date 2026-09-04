@@ -43,8 +43,14 @@ class Engine():
         
         q = queue.Queue()
 
+        for i in self.plugins:
+            if i.scope == models.JobScope.HOST:
+                job = models.Job(target=self.target, scope= models.JobScope.HOST)
+                q.put(job)
+                break
+
         for i in self.ports:
-            job = models.Job(self.target, port=i)
+            job = models.Job(target=self.target, port=i, scope= models.JobScope.PORT)
             q.put(job)
 
         return q
@@ -58,9 +64,9 @@ class Engine():
     def _Start_Worker(self):
         threads = []
         result_queue = queue.Queue()
-        job_queue = self._Assign_Job()
 
         self.plugins = self._Dependency_check()
+        job_queue = self._Assign_Job()
 
         for i in range(self.scan_config.worker):
             t = threading.Thread(target=worker.Worker, args=(job_queue, result_queue, self.scan_config, self.plugins), daemon=True)
@@ -79,7 +85,6 @@ class Engine():
         return results
 
     def run(self):
-        self._Assign_Job()
         result_queue = self._Start_Worker()
         results = self._Format_Results(result_queue)
         return results
