@@ -13,7 +13,7 @@ default_ports = [80,443,22,23,25,110,143,53,8080]
 
 parser = argparse.ArgumentParser()
 parser.add_argument('target')
-parser.add_argument('-p','--ports',type=int,nargs='+',default=default_ports)
+parser.add_argument('-p','--ports',type=int,nargs='+',default=[])
 parser.add_argument('-json', action= 'store_true')
 
 for i in registry:
@@ -37,7 +37,12 @@ for i,j in arg_dict.items():
 if plugins == []:
     plugins.append('tcp')
 
-# target = "scanme.nmap.org"
+if ports  == []:
+    for i in plugins:
+        if registry[i].scope.value != 'host':
+            ports = default_ports
+            break
+
 
 scanner = engine.Engine(target, ports, scan_config, plugins)
 results = scanner.run()
