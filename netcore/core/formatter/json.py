@@ -19,11 +19,20 @@ def json_result(result_list: list):
 
     return json_dict
 
+def clean_data(data):
+        
+        if isinstance(data, dict):
+            return {key: clean_data(value if isinstance(value, (str, dict, list)) else str(value)) for key, value in data.items()}
+
+        if isinstance(data, list):
+            return [clean_data(value if isinstance(value, (str, dict, list)) else str(value)) for value in data]
+
+        return data
 
 def json_write(data_dict: dict):
 
-    with open(f'results/result_{data_dict["target"]}.json', 'w') as file:
-        json.dump(data_dict, file, indent= 4)
+    with open(f'../results/result_{data_dict["target"]}.json', 'w') as file:
+        json.dump(clean_data(data_dict), file, indent= 4)
 
 def json_execute(result_list: list):
 
