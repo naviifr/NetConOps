@@ -15,6 +15,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('target')
 parser.add_argument('-p','--ports',type=int,nargs='+',default=[])
 parser.add_argument('-json', action= 'store_true')
+parser.add_argument('-v','--verbose', action= 'store_true')
 
 for i in registry:
     parser.add_argument(f'-{i}', action='store_true')
@@ -43,6 +44,8 @@ if ports  == []:
             ports = default_ports
             break
 
+if args.verbose:
+    scan_config.verbose = True
 
 scanner = engine.Engine(target, ports, scan_config, plugins)
 results = scanner.run()

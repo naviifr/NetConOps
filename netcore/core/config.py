@@ -11,3 +11,4 @@ class ScanConfig:
     header_size: int = MAX_HEADER_SIZE
     syn_timeout: int = TIMEOUT
     udp_timeout: int = TIMEOUT
+    verbose: bool = False
