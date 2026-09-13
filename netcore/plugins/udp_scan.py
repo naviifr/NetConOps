@@ -21,7 +21,7 @@ class UDP_Scan(BasePlugin):
             if privilege is None:
                 if syn.privilege_check() is not True:
                     print("Warning: UDP scan requires admin/root privileges. " \
-                          "Re-run this tool elevated, or remove -syn to use -tcp instead")
+                          "Re-run this tool elevated, or remove -udp to use -tcp instead")
                     return
             elif not privilege:
                 return
@@ -34,7 +34,7 @@ class UDP_Scan(BasePlugin):
             self.parse_response(received_packet, context)
 
         except Exception as e:
-            context.result.error['syn'] = str(e)
+            context.result.error['udp'] = str(e)
 
     @staticmethod
     def packet_former(gateway_mac, my_mac, my_ip, target_ip, target_port, srcport):

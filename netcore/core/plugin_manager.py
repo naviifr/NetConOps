@@ -10,14 +10,14 @@ class PluginManager:
         
         try:
             for plugin in self.plugins:
-                obj = plugin()
 
                 if context.job.scope != plugin.scope:
-                                     continue
-                
+                    continue
+
                 if context.result.status not in (Status.OPEN, None):
-                            continue
-                
+                    continue
+
+                obj = plugin()
                 obj.execute(context)
 
         finally:
