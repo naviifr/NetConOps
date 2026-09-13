@@ -22,10 +22,10 @@ def json_result(result_list: list):
 def clean_data(data):
         
         if isinstance(data, dict):
-            return {key: clean_data(value if isinstance(value, (str, dict, list)) else str(value)) for key, value in data.items()}
+            return {key: clean_data(value if isinstance(value, (str, dict, list, int, bool)) else str(value)) for key, value in data.items()}
 
         if isinstance(data, list):
-            return [clean_data(value if isinstance(value, (str, dict, list)) else str(value)) for value in data]
+            return [clean_data(value if isinstance(value, (str, dict, list, int, bool)) else str(value)) for value in data]
 
         return data
 

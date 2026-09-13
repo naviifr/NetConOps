@@ -4,6 +4,7 @@ import core.config as config
 import core.engine as engine
 import core.formatter.terminal as terminal
 import core.formatter.json as json
+import core.formatter.html as html
 from plugins.support.plugins_registry import registry
 
 start = time.time()
@@ -15,6 +16,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('target')
 parser.add_argument('-p','--ports',type=int,nargs='+',default=[])
 parser.add_argument('-json', action= 'store_true')
+parser.add_argument('-html', action= 'store_true')
 parser.add_argument('-v','--verbose', action= 'store_true')
 
 for i in registry:
@@ -52,6 +54,8 @@ results = scanner.run()
 
 if args.json:
     json.json_execute(results)
+elif args.html:
+    html.html_execute(results)
 else:
     terminal.print_result(results)
 
